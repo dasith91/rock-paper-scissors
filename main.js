@@ -1,5 +1,6 @@
 "use strict"
 
+// Return "Rock, Paper or Scissor" randomly selected by the computer
 function computerPlay() {
     const selections = ["Rock", "Paper", "Scissors"];
     let selectionIndex = Math.floor(Math.random() * 3);
@@ -7,6 +8,7 @@ function computerPlay() {
     return selections[selectionIndex];
 }
 
+// Compare player selection and computer selection and return result
 function playAround(playerSelection, computerSelection) {
     const rockRgex = /^(Rock)$/ig;
     const paperRgex = /^(Paper)$/ig;
@@ -55,6 +57,7 @@ function playAround(playerSelection, computerSelection) {
     }
 }
 
+// Exicute playAround function around five times and it provides final score
 function game() {
     let playerSelection;
 
