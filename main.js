@@ -22,7 +22,6 @@ function playAround(playerSelection, computerSelection) {
                 break;
             case 'Scissors':
                 return "You Win! Rock beats Scissor";
-                score++
                 break;
             default:
                 return drawMessage
