@@ -59,17 +59,21 @@ function playAround(playerSelection, computerSelection) {
 // Exicute playAround function around five times and it provides final score
 function game() {
     let playerSelection;
+    let score = 0;
 
     for (let i = 0; i < 5; i++) {
-        playerSelection = prompt("Insert 'Rock, Paper or Scissors'");
+        playerSelection = window.prompt("Insert 'Rock, Paper or Scissors'");
 
+        const winRgex = /\b(Win)\b/g;
         let computerSelection = computerPlay();
         let result = playAround(playerSelection, computerSelection);
-
+        
         alert(result);
+        if(winRgex.test(result)) { score++ }
+
     }
 
-    // alert(`Your score ${score}/5`)
+    alert(`Your score ${score}/5`)
 }
 
 game();
