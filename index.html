@@ -1,12 +1,68 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    </link>
+    <script type="text/javascript" src="main.js" defer></script>
 </head>
+
 <body>
-    
-    <script type="text/javascript" src="main.js"></script>
+    <h2 class="header">Rock Paper Scissors </br>Game</h2>
+    <div class="main">
+        <div class="selection-temp">
+            <div style="flex-basis: 16%;"></div>
+            <div>
+                <div class="machine">
+                    <!-- <img class="machine-selection-img" src="./img/peace (1).png" alt="rock" /> -->
+                    <small class="machine-message">You Winn</small>
+                    <!-- <div class="card">
+                        <div class="card-content">
+                            <p>Machine</p>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="selection">
+                    <div class="selection-list">
+                        <input type="image" src="./img/rock.png" alt="rock" id="rock" class="selection-btn btn-purple"
+                            value="r" />
+                        <label for="rock">Rock</label>
+                    </div>
+                    <div class="selection-list">
+                        <input type="image" src="./img/paper.png" alt="paper" id="paper"
+                            class="selection-btn btn-purple" value="p" />
+                        <label for="paper">Paper</label>
+                    </div>
+                    <div class="selection-list">
+                        <input type="image" src="./img/scissors.png" alt="scissors" id="scissors"
+                            class="selection-btn btn-purple" value="s" />
+                        <label for="scissors">Scissors</label>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="card">
+                    <div class="card-header">
+                        <p>Score</p>
+                    </div>
+                    <div class="card-content">
+                        <p class="score-text"></p>
+                        <p class="score-text"></p>
+                        <p class="score-text"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>
