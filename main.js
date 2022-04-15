@@ -1,20 +1,23 @@
 "use strict"
+/**
+ * Rock Paper Scissors Game
+ * code by Dasith
+ */
 const main = document.querySelector('.main');
-const machine = document.querySelector('#machine');
-const machineText = document.querySelector('.machine-message');
+const machine = document.querySelector('.machine');
+const machineText = document.querySelector('.machine-text');
 const selectionLayout = document.querySelector('.selection-temp');
 const selectionButtons = document.querySelectorAll('.selection-btn');
 const scoreBoard = document.querySelectorAll('.score-text');
-const scoreCard = document.createElement('div');
-const scoreCardHeader = document.createElement('div');
-const scoreCardContent = document.createElement('div');
-const header = document.createElement('h3');
-const paragraph = document.createElement('p');
-const button = document.createElement('button');
+const messageBox = document.querySelector('.message-box')
+const messageText = document.createElement('p');
+const resetBtn = document.createElement('button');
+const defaultMachineImg = document.querySelector('.machine-img');
 const gameObject = {
     numberOfAttempt: 0,
     machineSelection: "",
     machineScore: 0,
+    machineImg: "",
     playerSelection: "",
     playerScore: 0,
     message: "Shoot",
@@ -23,17 +26,6 @@ const gameObject = {
         return this.playerSelection + this.machineSelection
     }
 };
-
-scoreCard.className = 'card';
-scoreCardHeader.className = 'card-header';
-scoreCardContent.className = 'card-content';
-button.id = 'try_again';
-button.className = 'btn-green';
-button.textContent = 'Try Again';
-scoreCardHeader.appendChild(header);
-scoreCardContent.append(paragraph, button)
-scoreCard.append(scoreCardHeader, scoreCardContent)
-
 
 function fetchGameData() {
     let payload;
@@ -46,46 +38,123 @@ function fetchGameData() {
     }
 
     return payload
-    // console.table(payload)
 }
 
 function gameLayout() {
-    const { numberOfAttempt, message, machineScore, playerScore, tie } = fetchGameData();
+    const { numberOfAttempt, message, machineSelection, machineScore, playerSelection, playerScore, tie } = fetchGameData();
 
-    // Selection layout
-    machineText.textContent = message;
+    // Score board layout
     scoreBoard[0].textContent = `${machineScore} Machine`
     scoreBoard[1].textContent = `${playerScore} Player`
     scoreBoard[2].textContent = `${tie} Tie`
 
-    // Score card layout
+    // Player score layout
+    if (numberOfAttempt === 5) {
+        machine.removeChild(defaultMachineImg)
+        displayMessageBox()
+    }
 
-    if (numberOfAttempt == 5) {
-        main.removeChild(selectionLayout)
-        main.appendChild(scoreCard)
-        header.textContent = 'You Win!'
-        paragraph.textContent = `${playerScore}/5`
-        const resetBtn = document.querySelector('#try_again')
-        resetBtn.addEventListener('click', resetLayout)
-    } 
+    // Machine selection layout
+    if (gameObject.machineImg !== "") {
+        const img = document.createElement('img');
+        
+        setAttributes(img, {
+            src: gameObject.machineImg,
+            alt: (machineSelection === 'r') ? 'Rock' : (machineSelection === 'p') ? 'Paper' : 'Scissors',
+            class: 'machine-selection-img',
+            width: 72,
+            height: 72
+        })
+        img.style.padding = '6px 20px'
+        defaultMachineImg.style.display = "none"
+        machineText.style.margin = '9em auto'
+        machineText.textContent = `Machine select ${(machineSelection === 'r') ? 'Rock' : (machineSelection === 'p') ? 'Paper' : 'Scissors'} ${message}`
+        machine.append(img, machineText)
+        isDisableSelectionButton(true)
+        activeSelectionButton(playerSelection, 'active')
 
-}   
+        setTimeout(() => {
+            machine.removeChild(img)
+            defaultMachineImg.style.display = "flex";
+            machineText.style.margin = '11em auto'
+            machineText.textContent = (numberOfAttempt !== 5) ? "Shoot" : "";
+            isDisableSelectionButton(false)
+            activeSelectionButton(playerSelection, 'inactive')
+        }, 1300)
+    }
+}
 gameLayout()
 
-// Reset selection layout
 function resetLayout() {
     localStorage.removeItem('gameData')
-    main.removeChild(scoreCard)
-    main.appendChild(selectionLayout)
     location.reload()
 }
 
+function displayMessageBox() {
+    setTimeout(() => {
+        defaultMachineImg.style.display = "none"
+        machineText.style.display = "none"
+        messageText.className = "message-text"
+        messageText.textContent = createMessage(fetchGameData())
+        resetBtn.className = "btn-green"
+        resetBtn.textContent = "Try Again"
+        resetBtn.addEventListener('click', resetLayout)
+        messageBox.append(messageText, resetBtn)
+        isDisableSelectionButton(true)
+    }, 1500)
+}
+
+function createMessage({ playerScore, machineScore }) {
+    let msg;
+
+    if (playerScore > machineScore) {
+        msg = `${playerScore}/5 You win! and machine lost the game.`
+    }
+
+    if (playerScore < machineScore || (playerScore == 0 && machineScore == 0)) {
+        msg = `${playerScore}/5 You lost! and machine win the game.`
+    }
+
+    if (playerScore != 0 && machineScore != 0) {
+        if (playerScore == machineScore) msg = "Game is draw!"
+    }
+
+    return msg;
+}
+
+function isDisableSelectionButton(value) {
+    for (let selectionButton of selectionButtons) {
+        selectionButton.disabled = value
+    }
+    
+}
+
+function activeSelectionButton(playerSelect, status) {
+    selectionButtons.forEach((selectedButton, key) => {
+        if(selectedButton.value == playerSelect) {
+            if(status == 'active') {
+                selectedButton.style.border = '4px solid black'
+                selectedButton.style.transition = '1s'
+            }
+
+            if(status == 'inactive') {
+                selectedButton.style.border = '4px solid #b56be1'
+                selectedButton.style.transition = '1s'
+            }
+        }
+    })
+}
+
 function addGameDataToLocalStorage(data) {
-    localStorage.setItem('gameData', JSON.stringify({ fetchGameData, ...data }))
+    localStorage.setItem('gameData', JSON.stringify(data))
 }
 
 function computerPlay() {
-    const computerSelections = ['r', 'p', 's'];
+    const computerSelections = [
+        { r: './img/rock-machine.png' },
+        { p: './img/paper-machine.png' },
+        { s: './img/scissors-machine.png' }
+    ];
     const selectionIndex = Math.floor(Math.random() * 3)
 
     return computerSelections[selectionIndex]
@@ -100,7 +169,7 @@ function playAround() {
         case 'pr':
         case 'sp':
         case 'rs':
-            gameObject.message = "Player Win"
+            gameObject.message = "Player Win!"
             gameObject.playerScore = playerScore + 1
             gameObject.machineScore = machineScore
             gameObject.tie = tie
@@ -108,7 +177,7 @@ function playAround() {
         case 'sr':
         case 'rp':
         case 'ps':
-            gameObject.message = "Machine Win"
+            gameObject.message = "Machine Win!"
             gameObject.machineScore = machineScore + 1
             gameObject.playerScore = playerScore
             gameObject.tie = tie
@@ -116,7 +185,7 @@ function playAround() {
         case 'rr':
         case 'pp':
         case 'ss':
-            gameObject.message = "Game is Tie"
+            gameObject.message = "Game is Tie!"
             gameObject.tie = tie + 1
             gameObject.machineScore = machineScore
             gameObject.playerScore = playerScore
@@ -125,192 +194,24 @@ function playAround() {
 
     addGameDataToLocalStorage(gameObject)
     gameLayout()
-    // console.log(rockPaperScissors.selectionPair)
 }
 
 function gamePlay(e) {
+    const computerPlayObj = computerPlay();
+
     gameObject.playerSelection = e.target.value;
-    gameObject.machineSelection = computerPlay();
+    gameObject.machineSelection = Object.keys(computerPlayObj).toString();
+    gameObject.machineImg = Object.values(computerPlayObj).toString();
     playAround()
 
-    console.log(e.target.value)
 }
 
 for (let selectionBtn of selectionButtons) {
     selectionBtn.addEventListener('click', gamePlay)
 }
 
-
-
-
-
-// let previewPage = "Home"
-// const homeTemplate = document.createElement('div');
-// const logoImg = document.createElement('img');
-// const shootBtn = document.createElement('button');
-// shootBtn.id = "shoot-btn"
-// shootBtn.className = "btn-green";
-// shootBtn.textContent = "Shoot";
-// const selectionTemplate = document.createElement('div');
-// const machineNode = document.createElement('div');
-// const machineContent = document.createElement('div');
-// machineNode.className = "card";
-// machineContent.className = "card-content";
-// machineContent.textContent = "This is machine";
-
-
-// // Helper function: Set attributes to the element
-// function setAttributes(ele, attributes) {
-//     Object.keys(attributes).forEach((attribute, key) => {
-//         ele.setAttribute(attribute, Object.values(attributes)[key])
-//     })
-// }
-
-// // Set attributes to the 'img' element
-// setAttributes(logoImg, {
-//     src: "./img/log.png",
-//     alt: "RockPaperScissors Image",
-//     width: "128",
-//     height: "128"
-// });
-
-// homeTemplate.append(logoImg, shootBtn);
-// machineNode.appendChild(machineContent)
-// selectionTemplate.appendChild(machineNode);
-
-// function previewPageTemplate() {
-//     switch(previewPage) {
-//         // case 'Home':
-//         //     main.appendChild(homeTemplate);
-//         //     main.removeChild(selectionTemplate);
-//         //     break;
-//         case 'Selection':
-//             main.appendChild(selectionTemplate);
-//             main.removeChild(homeTemplate);
-//             break;
-//         default:
-//             main.appendChild(homeTemplate);
-//             break;
-//     }
-// }
-// previewPageTemplate()
-
-// document.querySelector('#shoot-btn').addEventListener('click', () => {
-//     previewPage = "Selection";
-//     previewPageTemplate()
-// });
-
-
-
-
-// // Return "Rock, Paper or Scissor" randomly selected by the computer
-// function computerPlay() {
-//     const selections = ["Rock", "Paper", "Scissors"];
-//     let selectionIndex = Math.floor(Math.random() * 3);
-
-//     return selections[selectionIndex];
-// }
-
-// // Compare player selection and computer selection and return result
-// function playAround(playerSelection, computerSelection) {
-//     const rockRgex = /^(Rock)$/ig;
-//     const paperRgex = /^(Paper)$/ig;
-//     const scissorRgex = /^(Scissors)$/ig;
-//     let playerCurrentSelection = null;
-//     //const drawMessage = "The computer thinking like you therefore game is a draw!";
-
-//     if (rockRgex.test(playerSelection)) {
-//         playerCurrentSelection = "Rock";
-//     } else if (paperRgex.test(playerSelection)) {
-//         playerCurrentSelection = "Paper";
-//     } else if (scissorRgex.test(playerSelection)) {
-//         playerCurrentSelection = "Scissors";
-//     } else {
-//         playerCurrentSelection = null;
-//     }
-
-//     if (
-//         (playerCurrentSelection == "Rock" && computerSelection == "Scissors") ||
-//         (playerCurrentSelection == "Paper" && computerSelection == "Rock") ||
-//         (playerCurrentSelection == "Scissors" && computerSelection == "Paper")
-//     ) {
-//         return `You Win! ${playerCurrentSelection} beats ${computerSelection}`;
-//     } else if (
-//         (playerCurrentSelection == "Rock" && computerSelection == "Paper") ||
-//         (playerCurrentSelection == "Paper" && computerSelection == "Scissors") ||
-//         (playerCurrentSelection == "Scissors" && computerSelection == "Rock")
-//     ) {
-//         return `You Lose! ${computerSelection} beats ${playerCurrentSelection}`;
-//     } else if (
-//         (playerCurrentSelection == "Rock" && computerSelection == "Rock") ||
-//         (playerCurrentSelection == "Paper" && computerSelection == "Paper") ||
-//         (playerCurrentSelection == "Scissors" && computerSelection == "Scissors")
-//     ) {
-//         return "The computer thinking like you therefore game is a draw!";
-//     } else {
-//         return "Wrong selection!";
-//     }
-
-
-//     // if (rockRgex.test(playerSelection)) {
-//     //     switch (computerSelection) {
-//     //         case 'Paper':
-//     //             return "You Lose! Paper beats Rock";
-//     //             break;
-//     //         case 'Scissors':
-//     //             return "You Win! Rock beats Scissor";
-//     //             break;
-//     //         default:
-//     //             return drawMessage
-//     //             break;
-//     //     }
-//     // } else if (paperRgex.test(playerSelection)) {
-//     //     switch (computerSelection) {
-//     //         case 'Rock':
-//     //             return "You Win! Paper beats Rock";
-//     //             break;
-//     //         case 'Scissors':
-//     //             return "You Lose! Scissor beats Paper";
-//     //             break;
-//     //         default:
-//     //             return drawMessage
-//     //             break;
-//     //     }
-//     // } else if (scissorRgex.test(playerSelection)) {
-//     //     switch (computerSelection) {
-//     //         case 'Rock':
-//     //             return "You Lose! Rock beats Scissor";
-//     //             break;
-//     //         case 'Paper':
-//     //             return "You win! Scissor beats Paper";
-//     //             break;
-//     //         default:
-//     //             return drawMessage
-//     //             break;
-//     //     }
-//     // } else {
-//     //     return "Wrong selection!";
-//     // }
-// }
-
-// // Exicute playAround function around five times and it provides final score
-// function game() {
-//     let playerSelection;
-//     let score = 0;
-
-//     for (let i = 0; i < 5; i++) {
-//         playerSelection = window.prompt("Insert 'Rock, Paper or Scissors'");
-
-//         const winRgex = /\b(Win)\b/g;
-//         let computerSelection = computerPlay();
-//         let result = playAround(playerSelection, computerSelection);
-
-//         alert(result);
-//         if (winRgex.test(result)) { score++ }
-
-//     }
-
-//     alert(`Your score ${score}/5`)
-// }
-
-// game();
+function setAttributes(tagName, attributes) {
+    Object.keys(attributes).forEach((attribute, key) => {
+        tagName.setAttribute(attribute, Object.values(attributes)[key])
+    })
+}

@@ -9,33 +9,65 @@ body {
     line-height: 1.6em;
 }
 
-.main > div, .selection, .selection-list, .card, .card-content {
+.main > div, .selection, .selection-list, .card, .card-content, .message-box {
     display: flex;
 }
 
-.machine {
+.machine , .machine-img {
     display: flex;
     flex-direction: column;
     align-items: center;
     background-image: url('./img/desktop2.png');
     background-size: contain;
     background-repeat: none;
-    position:relative;
-    width: 256px;
-    height: 256px;
+    position: relative;
+    width: 296px;
+    height: 296px;
 }
 
 .machine-selection-img {
     margin: 2em auto;
     position: absolute;
-    width: 102px;
-    height: 102px;
 }
 
-.machine-message {
-    margin: 10em auto;
+.hand-img{
+    margin: 1.6em auto;
+    position: relative;
+    animation-name: movehandimg;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease;
+}
+
+@keyframes movehandimg{
+    0%{top: 0px; bottom: 18px}
+    100%{top: 18px; bottom: 0px}
+}
+
+.machine-text {
+    margin: 11em auto; 
     position: absolute;
     color: #33f59c;
+    text-align: center;
+    font-size: small;
+    line-height: 2em;
+    padding: 2px 4px;
+}
+
+.message-box {
+    flex-direction: column;
+    align-items: center;
+}
+
+.message-text {
+    margin: 1em auto;
+    position: relative;
+    color: #33f59c;
+    text-align: justify;
+    font-size: small;
+    line-height: 1.5em;
+    word-spacing: -4px;
+    padding: 22px 28px;
 }
 
 .selection-temp {
@@ -58,8 +90,6 @@ body {
 .selection-list {
     flex-direction: column;
     align-items: center;
-    /* padding: 4px 8px; */
-    /* background: lightcoral; */
 }
 
 .card {
@@ -83,10 +113,9 @@ body {
 
 button {
     position: relative;
-    border: none;
     border-radius: 0.4em; 
-    margin: 12px;
-    padding: 8px 32px;
+    margin: 2px;
+    padding: 6px 24px;
     font-size: 18px;
     font-weight: 800;
     font-family: 'Press Start 2P', cursive;
@@ -97,11 +126,13 @@ button {
 }
 
 .btn-green {
+    border: none;
     background-color: #4ad395;
 }
 
 .btn-purple {
-    background-color: #bd80e1;
+    border: 4px solid #b56be1;
+    background-color: #b56be1;
 }
 
 .temp-display-none {

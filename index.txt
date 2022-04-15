@@ -1,0 +1,105 @@
+            <!-- <h3>Rock Paper Scissors</h3>
+            <h3>Game</h3> -->
+            <img src="./img/log.png" alt="Rock Paper Scissors Logo" width="256" height="256" />
+            <!-- <div class="selection">
+                <div class="selection-item">Rock</div>
+                <div class="selection-item">Paper</div>
+                <div class="selection-item">Scissors</div>
+            </div> -->
+            <div class="shoot-btn">
+                <button class="btn-green">Shoot</button>
+            </div>
+
+            <div class="machine">
+                <button class="btn-purple">
+                    <div class="selection-item">
+                        <img src="./img/rock-machine.png" alt="rock" width="64" height="64" />
+                        <img src="./img/receive.png" alt="rock" width="64" height="64" />
+                        <span>Machine</span>
+                    </div>
+                </button>
+            </div>
+            <div class="selection">
+                <button class="btn-purple">
+                    <div class="selection-item">
+                        <img src="./img/rock.png" alt="rock" width="64" height="64" />
+                        <span>Rock</span>
+                    </div>
+                </button>
+                <button class="btn-purple">
+                    <div class="selection-item">
+                        <img src="./img/paper.png" alt="paper" width="64" height="64" />
+                        <span>Paper</span>
+                    </div>
+                </button>
+                <button class="btn-purple">
+                    <div class="selection-item">
+                        <img src="./img/scissors.png" alt="scissors" width="64" height="64" />
+                        <span>Scissors</span>
+                    </div>
+                </button>
+            </div>
+            <div class="user-message">
+                <p>Win or Loos!</p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <p>You win!</p>
+                </div>
+                <div class="card-content">5/5</div>
+                <div class="tryagain-btn"><button class="btn-green">Try Again</button></div>
+            </div>
+
+
+
+	
+
+
+
+
+            
+        <div class="selection-temp">
+            <div style="flex-basis: 16%;"></div>
+            <div>
+                <div class="machine">
+                    <img class="machine-selection-img" src="./img/peace (1).png" alt="rock" />
+                    <small class="machine-message">You Winn</small>
+                    <!-- <div class="card">
+                        <div class="card-content">
+                            <p>Machine</p>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="selection">
+                    <button class="selection-btn btn-purple">
+                        <div class="selection-item">
+                            <img src="./img/rock.png" alt="rock" width="64" height="64" />
+                            <span>Rock</span>
+                        </div>
+                    </button>
+                    <button class="selection-btn btn-purple">
+                        <div class="selection-item">
+                            <img src="./img/paper.png" alt="paper" width="64" height="64" />
+                            <span>Paper</span>
+                        </div>
+                    </button>
+                    <button class="selection-btn btn-purple">
+                        <div class="selection-item">
+                            <img src="./img/scissors.png" alt="scissors" width="64" height="64" />
+                            <span>Scissors</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            <div>
+                <div class="card">
+                    <div class="card-content">
+                        <p>Score</p>
+                        <p>2 Machine</p>
+                        <p>1 You</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
