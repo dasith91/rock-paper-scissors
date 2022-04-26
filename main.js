@@ -1,7 +1,6 @@
 "use strict"
 /**
  * Rock Paper Scissors Game
- * code by Dasith
  */
 const main = document.querySelector('.main');
 const machine = document.querySelector('.machine');
