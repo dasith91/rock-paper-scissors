@@ -56,7 +56,7 @@ function gameLayout() {
     // Machine selection layout
     if (gameObject.machineImg !== "") {
         const img = document.createElement('img');
-        
+
         setAttributes(img, {
             src: gameObject.machineImg,
             alt: (machineSelection === 'r') ? 'Rock' : (machineSelection === 'p') ? 'Paper' : 'Scissors',
@@ -125,18 +125,17 @@ function isDisableSelectionButton(value) {
     for (let selectionButton of selectionButtons) {
         selectionButton.disabled = value
     }
-    
 }
 
 function activeSelectionButton(playerSelect, status) {
     selectionButtons.forEach((selectedButton, key) => {
-        if(selectedButton.value == playerSelect) {
-            if(status == 'active') {
+        if (selectedButton.value == playerSelect) {
+            if (status == 'active') {
                 selectedButton.style.border = '4px solid black'
                 selectedButton.style.transition = '1s'
             }
 
-            if(status == 'inactive') {
+            if (status == 'inactive') {
                 selectedButton.style.border = '4px solid #b56be1'
                 selectedButton.style.transition = '1s'
             }
@@ -202,7 +201,6 @@ function gamePlay(e) {
     gameObject.machineSelection = Object.keys(computerPlayObj).toString();
     gameObject.machineImg = Object.values(computerPlayObj).toString();
     playAround()
-
 }
 
 for (let selectionBtn of selectionButtons) {
