@@ -131,7 +131,7 @@ function activeSelectionButton(playerSelect, status) {
     selectionButtons.forEach((selectedButton, key) => {
         if (selectedButton.value == playerSelect) {
             if (status == 'active') {
-                selectedButton.style.border = '4px solid black'
+                selectedButton.style.border = '4px solid #451a5e'
                 selectedButton.style.transition = '1s'
             }
 
